@@ -34,9 +34,8 @@
                 <label for="student-class" class="block mb-1">Turma:</label>
                 <input type="text" id="student-class" class="answer-input" placeholder="Digite sua turma" required>
             </div>
-           
             <button id="start-task" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">Iniciar Tarefa</button>
-        </div><center> Informatize - professor Jonas Flores </center>
+        </div><center>Informatize - Professor Jonas Flores</center>
 
         <div id="student-info" class="mt-6">
             <h2 class="text-xl font-semibold mb-2">Bem-vindo, <span id="display-name"></span> (Turma: <span id="display-class"></span>)</h2>
@@ -485,48 +484,11 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 26</h2>
-                    <p>Você está criando um mini livro-jogo de RPG para iniciantes, onde o jogador faz escolhas que definem sua aventura. O programa deve:</p>
-                    <ul class="list-disc ml-6">
-                        <li><strong>Escolha da classe</strong>: Perguntar: 'Você prefere lutar com: espada, magia ou furtividade?' e, com base na resposta (em minúsculas), definir a classe:
-                            <ul class="list-circle ml-6">
-                                <li>'espada' → Guerreiro</li>
-                                <li>'magia' → Mago</li>
-                                <li>'furtividade' → Ladino</li>
-                                <li>Qualquer outra resposta → Aventureiro sem classe</li>
-                            </ul>
-                        </li>
-                        <li><strong>Escolha do nome</strong>: Solicitar que o jogador digite o nome do personagem. Se o nome for vazio (apenas espaços ou nada), atribuir 'Aventureiro Desconhecido'.</li>
-                        <li><strong>Escolha da arma</strong>: Perguntar: 'Escolha sua arma: espada longa, cajado arcano ou adaga afiada.' Com base na resposta (em minúsculas), atribuir a arma correspondente. Se inválida, atribuir 'nenhuma arma'.</li>
-                        <li><strong>Escolha do item</strong>: Perguntar: 'Qual item você carrega: poção de cura, mapa antigo ou corda resistente?' Com base na resposta (em minúsculas), atribuir o item. Se inválido, atribuir 'nenhum item'.</li>
-                        <li><strong>Escolha do destino</strong>: Perguntar: 'Para onde você vai: floresta sombria, montanha gelada ou vila tranquila?' Com base na resposta (em minúsculas), atribuir o destino. Se inválido, atribuir 'lugar desconhecido'.</li>
-                        <li><strong>Sequência de escolhas</strong>: Após as escolhas iniciais, implemente uma pequena sequência de escolhas na história. Por exemplo:
-                            <ul class="list-circle ml-6">
-                                <li>Se o destino for 'floresta sombria', o jogador encontra um lobo. Perguntar: 'Você deseja lutar, fugir ou usar um item?'</li>
-                                <li>Se 'lutar', exibir uma mensagem baseada na arma (e.g., 'Você ataca o lobo com sua espada longa!').</li>
-                                <li>Se 'fugir', exibir 'Você escapa por pouco!'.</li>
-                                <li>Se 'usar um item', exibir uma mensagem baseada no item (e.g., 'Você usa a poção de cura para se recuperar!').</li>
-                                <li>Se o destino for outro, adapte o desafio (e.g., na 'montanha gelada', o jogador enfrenta uma tempestade; na 'vila tranquila', encontra um enigma). Detalhe o desafio e as opções no código.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Resumo final</strong>: Exibir um resumo concatenando todas as escolhas iniciais, como: 'Você é [nome], um [classe] que carrega [arma] e [item]. Sua aventura começa em [destino].'</li>
-                        <li><strong>Confirmação</strong>: Perguntar: 'Deseja iniciar o jogo? (sim/não)' Se a resposta for 'sim' (em minúsculas), prosseguir com a sequência de escolhas e exibir o resultado. Se for 'não', exibir 'Até a próxima aventura!'. Qualquer outra resposta exibe 'Resposta inválida. Aventura cancelada.'.</li>
-                        <li><strong>Exemplo de fluxo da história</strong>: Suponha que o jogador escolha:
-                            <ul class="list-circle ml-6">
-                                <li>Classe: Mago (escolheu 'magia')</li>
-                                <li>Nome: Eliana</li>
-                                <li>Arma: Cajado arcano</li>
-                                <li>Item: Poção de cura</li>
-                                <li>Destino: Floresta sombria</li>
-                            </ul>
-                            O programa exibe: 'Você é Eliana, um Mago que carrega cajado arcano e poção de cura. Sua aventura começa em floresta sombria.' Após confirmar 'sim', o programa prossegue: 'Você encontra um lobo na floresta sombria. O que deseja fazer: lutar, fugir ou usar um item?' Se o jogador escolher 'usar um item', o programa exibe: 'Você usa a poção de cura para se recuperar!' e conclui a aventura.
-                        </li>
-                        <li><strong>Requisitos adicionais</strong>:
-                            <ul class="list-circle ml-6">
-                                <li>Inclua comentários claros no código explicando cada seção (e.g., # Solicita a escolha da classe).</li>
-                                <li>Se usar comandos não abordados em sala (como <code>def</code>, <code>try</code>, <code>except</code>, <code>continue</code>), justifique seu uso em comentários no código, explicando por que são necessários e como ajudam a tornar o código mais robusto ou organizado.</li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <p>Imagine que você está criando um mini livro-jogo de RPG para iniciantes, onde o jogador toma decisões que moldam sua aventura. O programa deve guiar o jogador por algumas escolhas iniciais e uma sequência de eventos. Aqui está como funciona: primeiro, pergunte ao jogador com qual estilo ele prefere lutar — espada, magia ou furtividade — e defina sua classe com base na resposta (em minúsculas): 'espada' vira Guerreiro, 'magia' vira Mago, 'furtividade' vira Ladino, e qualquer outra coisa resulta em Aventureiro sem classe. Depois, peça o nome do personagem; se ele deixar em branco ou só colocar espaços, use 'Aventureiro Desconhecido'. Em seguida, deixe o jogador escolher uma arma entre espada longa, cajado arcano ou adaga afiada (em minúsculas), atribuindo 'nenhuma arma' se a escolha for inválida. Pergunte também sobre um item — poção de cura, mapa antigo ou corda resistente — e, se a resposta não bater, defina como 'nenhum item'. Por fim, escolha o destino: floresta sombria, montanha gelada ou vila tranquila, ou 'lugar desconhecido' se for algo diferente.</p>
+                    <p>Depois das escolhas iniciais, crie uma sequência simples na história. Por exemplo, se o destino for a floresta sombria, o jogador encontra um lobo e pode decidir lutar, fugir ou usar um item. Se escolher lutar, mostre uma mensagem baseada na arma, como 'Você ataca o lobo com sua espada longa!'. Se optar por fugir, exiba 'Você escapa por pouco!'. Se usar um item, descreva o efeito, como 'Você usa a poção de cura para se recuperar!'. Para outros destinos, adapte o desafio — na montanha gelada, pode ser uma tempestade; na vila tranquila, um enigma. Detalhe essas partes no código.</p>
+                    <p>No final, resuma tudo com uma frase como 'Você é [nome], um [classe] que carrega [arma] e [item]. Sua aventura começa em [destino].'. Antes de prosseguir, pergunte se o jogador quer iniciar o jogo ('sim' ou 'não', em minúsculas): se sim, siga com a sequência de escolhas e mostre o resultado; se não, exiba 'Até a próxima aventura!'; qualquer outra resposta leva a 'Resposta inválida. Aventura cancelada.'.</p>
+                    <p>Como exemplo, imagine que o jogador escolhe Mago (com 'magia'), nomeia o personagem de Eliana, pega cajado arcano e poção de cura, e vai para a floresta sombria. O programa diria: 'Você é Eliana, um Mago que carrega cajado arcano e poção de cura. Sua aventura começa em floresta sombria.' Com 'sim', continuaria: 'Você encontra um lobo na floresta sombria. O que deseja fazer: lutar, fugir ou usar um item?' Se escolher 'usar um item', mostraria 'Você usa a poção de cura para se recuperar!' e encerraria.</p>
+                    <p>Adicione comentários claros no código para explicar cada parte, como '# Solicita a escolha da classe'. Se usar comandos como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code> (que ainda não vimos em aula), justifique em comentários por que eles ajudam a deixar o código mais robusto ou organizado. Não esqueça de testar tudo no Google Colab!</p>
                     <p class="text-blue-500 mt-2">Nota: Teste seu código no Google Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q26" rows="10" placeholder="Digite seu código aqui, incluindo comentários e justificativas para comandos avançados..."></textarea>
@@ -547,6 +509,7 @@ print(media)
         let activityLog = [];
         let awayTimeStart = null;
 
+        // Capturar eventos de Ctrl + C
         document.addEventListener('keydown', (event) => {
             if (event.ctrlKey && event.key === 'c') {
                 const selectedText = window.getSelection().toString();
@@ -558,6 +521,7 @@ print(media)
             }
         });
 
+        // Monitorar trocas de tela (visibilidade)
         document.addEventListener('visibilitychange', () => {
             const timestamp = new Date().toLocaleTimeString();
             if (document.hidden) {
@@ -577,6 +541,7 @@ print(media)
             document.getElementById('activity-log').textContent = `Log de Atividades: ${activityLog.join('; ')}`;
         }
 
+        // Iniciar tarefa com nome e turma
         document.getElementById('start-task').addEventListener('click', () => {
             studentName = document.getElementById('student-name').value.trim();
             studentClass = document.getElementById('student-class').value.trim();
@@ -590,14 +555,14 @@ print(media)
             }
         });
 
-        // Exportar  PDF
+        // Exportar para PDF
         document.getElementById('export-pdf').addEventListener('click', () => {
             const doc = new jsPDF();
             const pageWidth = doc.internal.pageSize.getWidth();
             const margin = 10;
             let y = 10;
 
-            //  cabeçalho
+            // Adicionar cabeçalho
             doc.setFontSize(16);
             doc.text('Tarefa Avaliativa de Programação', margin, y);
             y += 10;
@@ -614,7 +579,7 @@ print(media)
             doc.text('Respostas:', margin, y);
             y += 10;
 
-            //  respostas de múltipl escolha (1-17)
+            // Coletar respostas de múltipla escolha (1-17)
             for (let i = 1; i <= 17; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
                 const answer = selected ? selected.value : 'Não respondido';
@@ -623,7 +588,7 @@ print(media)
                 if (y > 280) { doc.addPage(); y = 10; }
             }
 
-            // respostas de ordenação (18-21, 27-29)
+            // Coletar respostas de ordenação (18-21, 27-29)
             for (let i = 18; i <= 21; i++) {
                 const maxSteps = i === 18 ? 4 : i === 21 ? 12 : 3;
                 const order = [];
@@ -647,7 +612,7 @@ print(media)
                 if (y > 280) { doc.addPage(); y = 10; }
             }
 
-            //  resposts de código (22-26) 
+            // Coletar respostas de código (22-26) com tratamento de texto longo
             for (let i = 22; i <= 26; i++) {
                 const textarea = document.getElementById(`q${i}`);
                 const answer = textarea ? textarea.value : 'Não respondido';
@@ -663,9 +628,10 @@ print(media)
                     doc.text(line, margin, y);
                     y += 5;
                 }
-                y += 5;
+                y += 5; // Espaçamento extra após a questão
             }
 
+            // Adicionar log de atividades
             y += 15;
             doc.setFontSize(14);
             doc.text('Log de Atividades:', margin, y);
