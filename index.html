@@ -16,29 +16,50 @@
         .order-input { width: 60px; margin-right: 1rem; }
         #student-info { display: none; margin-top: 1rem; }
         #activity-log { font-size: 0.9rem; color: #666; margin-top: 1rem; }
+        .important-notice { color: #d32f2f; font-weight: bold; margin: 1rem 0; }
     </style>
 </head>
 <body class="bg-gray-100 p-6">
     <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
         <h1 class="text-3xl font-bold mb-6 text-center">Tarefa Avaliativa de Programação</h1>
         <h2 class="text-xl font-semibold mb-4">Instruções</h2>
-        <p class="mb-4">Esta tarefa deve ser realizada individualmente e vale 3 pontos. Leia cada questão com atenção e forneça as respostas solicitadas. Para questões de múltipla escolha, selecione a alternativa correta. Para questões de ordenação, indique a sequência correta dos passos inserindo os números correspondentes a cada passo. Para questões de código, escreva o código em Python e, se solicitado, teste no Google Colab. Certifique-se de que suas respostas sejam claras e completas. Após completar, clique em "Exportar Respostas" para baixar um arquivo PDF com suas respostas e log de atividades.</p>
+        <p class="mb-4">Esta tarefa deve ser realizada em dupla ou trio (máximo de três pessoas) e vale 3 pontos. Leiam cada questão com atenção e forneçam as respostas solicitadas. Para questões de múltipla escolha, selecionem a alternativa correta. Para questões de ordenação, indiquem a sequência correta dos passos inserindo os números correspondentes a cada passo. Um exemplo de algoritmo com 5 passos está disponível abaixo. Para questões de código, escrevam o código em Python e, se solicitado, testem no Google Colab. Podem pesquisar conteúdo para auxiliar nas respostas, mas tenham cuidado ao usar comandos não aprendidos em aula (como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code>), pois podem complicar a depuração em caso de erros. Na Questão 26, o jogo de RPG é um guia: podem seguir exatamente o exemplo ou criar outro jogo ou uma solução simples, desde que usem <code>if</code>, <code>elif</code> e <code>else</code> como base. Certifiquem-se de que as respostas sejam claras e completas. Após completarem, cliquem em "Exportar Respostas em PDF" para baixar um arquivo PDF com suas respostas e log de atividades. <span class="important-notice">IMPORTANTE: Sempre cliquem em "Exportar Respostas em PDF" ao final para salvar o trabalho. Se não terminarem por falta de tempo, continuem na próxima aula, mas não esqueçam de baixar o PDF. Qualquer dúvida, entrem em contato pelo meu WhatsApp.</span></p>
+
+        <!-- Exemplo de Algoritmo -->
+        <h2 class="text-xl font-semibold mb-2">Exemplo de Algoritmo</h2>
+        <p class="mb-2"><strong>Exemplo:</strong> Reorganizem os passos abaixo para criar um algoritmo que calcula a área de um retângulo. Insiram o número correspondente (1 a 5) para cada passo na ordem lógica.</p>
+        <ul>
+            <li>Calcular a área = comprimento * largura</li>
+            <li>Ler o comprimento do retângulo</li>
+            <li>Exibir a área calculada</li>
+            <li>Ler a largura do retângulo</li>
+            <li>Validar se comprimento e largura são positivos</li>
+        </ul>
+        <p class="mt-2"><strong>Resposta:</strong></p>
+        <div>
+            <div class="flex items-center mb-2"><span class="order-input">2</span> Ler o comprimento do retângulo</div>
+            <div class="flex items-center mb-2"><span class="order-input">3</span> Ler a largura do retângulo</div>
+            <div class="flex items-center mb-2"><span class="order-input">4</span> Validar se comprimento e largura são positivos</div>
+            <div class="flex items-center mb-2"><span class="order-input">1</span> Calcular a área = comprimento * largura</div>
+            <div class="flex items-center mb-2"><span class="order-input">5</span> Exibir a área calculada</div>
+        </div>
 
         <div id="student-form">
             <h2 class="text-xl font-semibold mb-2">Informações do Aluno</h2>
             <div class="mb-4">
                 <label for="student-name" class="block mb-1">Nome:</label>
-                <input type="text" id="student-name" class="answer-input" placeholder="Digite seu nome" required>
+                <input type="text" id="student-name" class="answer-input" placeholder="Digite os nomes da dupla/trio" required>
             </div>
             <div class="mb-4">
                 <label for="student-class" class="block mb-1">Turma:</label>
                 <input type="text" id="student-class" class="answer-input" placeholder="Digite sua turma" required>
             </div>
             <button id="start-task" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">Iniciar Tarefa</button>
-        </div>Informatize - professor Jonas Flores
+        </div>
 
         <div id="student-info" class="mt-6">
-            <h2 class="text-xl font-semibold mb-2">Bem-vindo, <span id="display-name"></span> (Turma: <span id="display-class"></span>)</h2>
+            <h2 class="text-xl font-semibold mb-2">Bem-vindos, <span id="display-name"></span> (Turma: <span id="display-class"></span>)</h2>
+            <p class="important-notice">Lembrem-se: Ao finalizarem, cliquem em "Exportar Respostas em PDF" para salvar suas respostas. Se não terminarem, continuem na próxima aula, mas não esqueçam de baixar o PDF! Qualquer dúvida, entrem em contato pelo meu WhatsApp.</p>
             <div id="questions">
                 <!-- Seção: Questões de Comandos/Códigos -->
                 <h2 class="text-2xl font-bold mt-8 mb-4">Questões de Comandos/Códigos</h2>
@@ -310,9 +331,10 @@ print(media)
 
                 <!-- Seção: Questões de Algoritmos -->
                 <h2 class="text-2xl font-bold mt-8 mb-4">Questões de Algoritmos</h2>
+                <p class="important-notice">Lembrem-se: Podem pesquisar conteúdo para auxiliar nas respostas, mas cuidado com comandos não aprendidos, pois podem complicar a depuração. Não esqueçam de clicar em "Exportar Respostas em PDF" ao final! Qualquer dúvida, contatem pelo meu WhatsApp.</p>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 18</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que calcula o preço final de um produto com desconto. Insira o número correspondente (1 a 4) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que calcula o preço final de um produto com desconto. Insiram o número correspondente (1 a 4) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Ler o preço do produto</li>
                         <li>Exibir o preço final</li>
@@ -329,7 +351,7 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 19</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que verifica se um número é positivo ou negativo. Insira o número correspondente (1 a 3) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que verifica se um número é positivo ou negativo. Insiram o número correspondente (1 a 3) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Se número >= 0, exibir 'Positivo'</li>
                         <li>Ler o número do usuário</li>
@@ -344,7 +366,7 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 20</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que verifica se um aluno foi aprovado com base na nota. Insira o número correspondente (1 a 3) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que verifica se um aluno foi aprovado com base na nota. Insiram o número correspondente (1 a 3) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Se nota >= 7, exibir 'Aprovado'</li>
                         <li>Ler a nota do aluno</li>
@@ -359,7 +381,7 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 21</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que programa um drone para realizar entregas. Insira o número correspondente (1 a 12) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que programa um drone para realizar entregas. Insiram o número correspondente (1 a 12) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Monitorar espaço aéreo para outros drones ou aeronaves</li>
                         <li>Verificar nível de carga da bateria</li>
@@ -392,7 +414,7 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 27</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que calcula a média de duas notas de um aluno e verifica se ele foi aprovado. Insira o número correspondente (1 a 5) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que calcula a média de duas notas de um aluno e verifica se ele foi aprovado. Insiram o número correspondente (1 a 5) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Ler a primeira nota do aluno</li>
                         <li>Calcular a média = (nota1 + nota2) / 2</li>
@@ -411,7 +433,7 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 28</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que converte uma temperatura de Celsius para Fahrenheit. Insira o número correspondente (1 a 6) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que converte uma temperatura de Celsius para Fahrenheit. Insiram o número correspondente (1 a 6) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Ler a temperatura em Celsius</li>
                         <li>Calcular Fahrenheit = (Celsius * 9/5) + 32</li>
@@ -432,7 +454,7 @@ print(media)
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 29</h2>
-                    <p>Reorganize os passos abaixo para criar um algoritmo que simula um sistema de autenticação de usuário. Insira o número correspondente (1 a 8) para cada passo na ordem lógica.</p>
+                    <p>Reorganizem os passos abaixo para criar um algoritmo que simula um sistema de autenticação de usuário. Insiram o número correspondente (1 a 8) para cada passo na ordem lógica.</p>
                     <ul>
                         <li>Exibir mensagem de erro e encerrar se credenciais inválidas</li>
                         <li>Ler a senha do usuário</li>
@@ -458,44 +480,46 @@ print(media)
 
                 <!-- Seção: Questões de Lógica -->
                 <h2 class="text-2xl font-bold mt-8 mb-4">Questões de Lógica</h2>
+                <p class="important-notice">Lembrem-se: Podem pesquisar conteúdo para auxiliar nas respostas, mas cuidado com comandos não aprendidos, pois podem complicar a depuração. Não esqueçam de clicar em "Exportar Respostas em PDF" ao final! Qualquer dúvida, contatem pelo meu WhatsApp.</p>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 22</h2>
-                    <p>Escreva um código em Python que crie variáveis para armazenar o nome e a idade de uma pessoa e exiba uma mensagem usando concatenação com f-strings. Exemplo de saída: 'Ana tem 20 anos'. Teste no Colab.</p>
+                    <p>Escrevam um código em Python que crie variáveis para armazenar o nome e a idade de uma pessoa e exiba uma mensagem usando concatenação com f-strings. Exemplo de saída: 'Ana tem 20 anos'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q22" rows="6" placeholder="Digite seu código aqui..."></textarea>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 23</h2>
-                    <p>Escreva um código em Python que crie uma variável para armazenar o preço de um produto e exiba o preço com um desconto de 10% usando um operador aritmético. Exemplo de saída: 'Preço com desconto: 90.0'. Teste no Colab.</p>
+                    <p>Escrevam um código em Python que crie uma variável para armazenar o preço de um produto e exiba o preço com um desconto de 10% usando um operador aritmético. Exemplo de saída: 'Preço com desconto: 90.0'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q23" rows="6" placeholder="Digite seu código aqui..."></textarea>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 24</h2>
-                    <p>Escreva um código em Python que peça ao usuário sua idade e verifique se ele pode votar (idade >= 16). Exiba uma mensagem usando concatenação. Exemplo de saída: 'Olá, João, você pode votar'. Teste no Colab.</p>
+                    <p>Escrevam um código em Python que peça ao usuário sua idade e verifique se ele pode votar (idade >= 16). Exiba uma mensagem usando concatenação. Exemplo de saída: 'Olá, João, você pode votar'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q24" rows="6" placeholder="Digite seu código aqui..."></textarea>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 25</h2>
-                    <p>Escreva um código em Python que peça ao usuário uma nota (0 a 10) e classifique-a: 'Aprovado' (nota >= 7), 'Recuperação' (nota >= 5 e < 7), ou 'Reprovado' (nota < 5). Exiba com concatenação. Exemplo de saída: 'Nota 8: Aprovado'. Teste no Colab.</p>
+                    <p>Escrevam um código em Python que peça ao usuário uma nota (0 a 10) e classifique-a: 'Aprovado' (nota >= 7), 'Recuperação' (nota >= 5 e < 7), ou 'Reprovado' (nota < 5). Exiba com concatenação. Exemplo de saída: 'Nota 8: Aprovado'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q25" rows="6" placeholder="Digite seu código aqui..."></textarea>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 26</h2>
-                    <p>Imagine que você está criando um mini livro-jogo de RPG para iniciantes, onde o jogador toma decisões que moldam sua aventura. O programa deve guiar o jogador por algumas escolhas iniciais e uma pequena sequência de eventos. Aqui está como funciona: primeiro, pergunte ao jogador com qual estilo ele prefere lutar — espada, magia ou furtividade — e defina sua classe com base na resposta (em minúsculas): 'espada' vira Guerreiro, 'magia' vira Mago, 'furtividade' vira Ladino, e qualquer outra coisa resulta em Aventureiro sem classe. Depois, peça o nome do personagem; se ele deixar em branco ou só colocar espaços, use 'Aventureiro Desconhecido'. Em seguida, deixe o jogador escolher uma arma entre espada longa, cajado arcano ou adaga afiada (em minúsculas), atribuindo 'nenhuma arma' se a escolha for inválida. Pergunte também sobre um item — poção de cura, mapa antigo ou corda resistente — e, se a resposta não bater, defina como 'nenhum item'. Por fim, escolha o destino: floresta sombria, montanha gelada ou vila tranquila, ou 'lugar desconhecido' se for algo diferente.</p>
-                    <p>Depois das escolhas iniciais, crie uma sequência simples na história. Por exemplo, se o destino for a floresta sombria, o jogador encontra um lobo e pode decidir lutar, fugir ou usar um item. Se escolher lutar, mostre uma mensagem baseada na arma, como 'Você ataca o lobo com sua espada longa!'. Se optar por fugir, exiba 'Você escapa por pouco!'. Se usar um item, descreva o efeito, como 'Você usa a poção de cura para se recuperar!'. Para outros destinos, adapte o desafio — na montanha gelada, pode ser uma tempestade; na vila tranquila, um enigma. Detalhe essas partes no código.</p>
-                    <p>No final, resuma tudo com uma frase como 'Você é [nome], um [classe] que carrega [arma] e [item]. Sua aventura começa em [destino].'. Antes de prosseguir, pergunte se o jogador quer iniciar o jogo ('sim' ou 'não', em minúsculas): se sim, siga com a sequência de escolhas e mostre o resultado; se não, exiba 'Até a próxima aventura!'; qualquer outra resposta leva a 'Resposta inválida. Aventura cancelada.'.</p>
-                    <p>Como exemplo, imagine que o jogador escolhe Mago (com 'magia'), nomeia o personagem de Eliana, pega cajado arcano e poção de cura, e vai para a floresta sombria. O programa diria: 'Você é Eliana, um Mago que carrega cajado arcano e poção de cura. Sua aventura começa em floresta sombria.' Com 'sim', continuaria: 'Você encontra um lobo na floresta sombria. O que deseja fazer: lutar, fugir ou usar um item?' Se escolher 'usar um item', mostraria 'Você usa a poção de cura para se recuperar!' e encerraria.</p>
-                    <p>Adicione comentários claros no código para explicar cada parte, como '# Solicita a escolha da classe'. Se usar comandos como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code> (que ainda não vimos em aula), justifique em comentários por que eles ajudam a deixar o código mais robusto ou organizado. Não esqueça de testar tudo no Google Colab!</p>
-                    <p class="text-blue-500 mt-2">Nota: Teste seu código no Google Colab.</p>
+                    <p>Imaginemos que vocês estão criando um mini livro-jogo de RPG para iniciantes, onde o jogador toma decisões que moldam sua aventura. O programa deve guiar o jogador por algumas escolhas iniciais e uma sequência de eventos. Aqui está como funciona: primeiro, perguntem ao jogador com qual estilo ele prefere lutar — espada, magia ou furtividade — e definam sua classe com base na resposta (em minúsculas): 'espada' vira Guerreiro, 'magia' vira Mago, 'furtividade' vira Ladino, e qualquer outra coisa resulta em Aventureiro sem classe. Depois, peçam o nome do personagem; se ele deixar em branco ou só colocar espaços, usem 'Aventureiro Desconhecido'. Em seguida, deixem o jogador escolher uma arma entre espada longa, cajado arcano ou adaga afiada (em minúsculas), atribuindo 'nenhuma arma' se a escolha for inválida. Perguntem também sobre um item — poção de cura, mapa antigo ou corda resistente — e, se a resposta não bater, definam como 'nenhum item'. Por fim, escolham o destino: floresta sombria, montanha gelada ou vila tranquila, ou 'lugar desconhecido' se for algo diferente.</p>
+                    <p>Depois das escolhas iniciais, criem uma sequência simples na história. Por exemplo, se o destino for a floresta sombria, o jogador encontra um lobo e pode decidir lutar, fugir ou usar um item. Se escolher lutar, mostrem uma mensagem baseada na arma, como 'Vocês atacam o lobo com sua espada longa!'. Se optarem por fugir, exibam 'Vocês escapam por pouco!'. Se usarem um item, descrevam o efeito, como 'Vocês usam a poção de cura para se recuperar!'. Para outros destinos, adaptem o desafio — na montanha gelada, pode ser uma tempestade; na vila tranquila, um enigma. Detalhem essas partes no código.</p>
+                    <p>No final, resumam tudo com uma frase como 'Vocês são [nome], um [classe] que carrega [arma] e [item]. Sua aventura começa em [destino].'. Antes de prosseguirem, perguntem se o jogador quer iniciar o jogo ('sim' ou 'não', em minúsculas): se sim, sigam com a sequência de escolhas e mostrem o resultado; se não, exibam 'Até a próxima aventura!'; qualquer outra resposta leva a 'Resposta inválida. Aventura cancelada.'.</p>
+                    <p>Como exemplo, imaginem que o jogador escolhe Mago (com 'magia'), nomeia o personagem de Eliana, pega cajado arcano e poção de cura, e vai para a floresta sombria. O programa diria: 'Vocês são Eliana, um Mago que carrega cajado arcano e poção de cura. Sua aventura começa em floresta sombria.' Com 'sim', continuaria: 'Vocês encontram um lobo na floresta sombria. O que desejam fazer: lutar, fugir ou usar um item?' Se escolherem 'usar um item', mostraria 'Vocês usam a poção de cura para se recuperar!' e encerraria.</p>
+                    <p>Vocês podem seguir exatamente este exemplo ou criar outro jogo ou uma solução simples, desde que usem <code>if</code>, <code>elif</code> e <code>else</code> como base. Adicionem comentários claros no código para explicar cada parte, como '# Solicita a escolha da classe'. Se usarem comandos como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code> (que ainda não vimos em aula), justifiquem em comentários por que eles ajudam a deixar o código mais robusto ou organizado. Não esqueçam de testar tudo no Google Colab!</p>
+                    <p class="text-blue-500 mt-2">Nota: Testem seu código no Google Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q26" rows="10" placeholder="Digite seu código aqui, incluindo comentários e justificativas para comandos avançados..."></textarea>
                 </div>
             </div>
 
             <div class="mt-6 text-center">
+                <p class="important-notice">Lembrem-se: Cliquem em "Exportar Respostas em PDF" para salvar suas respostas. Não finalizem sem exportar! Qualquer dúvida, contatem pelo meu WhatsApp.</p>
                 <button id="export-pdf" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">Exportar Respostas em PDF</button>
             </div>
             <div id="activity-log" class="mt-4">Log de Atividades: Nenhum evento registrado.</div>
@@ -551,7 +575,7 @@ print(media)
                 document.getElementById('student-form').style.display = 'none';
                 document.getElementById('student-info').style.display = 'block';
             } else {
-                alert('Por favor, preencha nome e turma!');
+                alert('Por favor, preencham os nomes da dupla/trio e a turma!');
             }
         });
 
@@ -567,7 +591,7 @@ print(media)
             doc.text('Tarefa Avaliativa de Programação', margin, y);
             y += 10;
             doc.setFontSize(12);
-            doc.text(`Aluno: ${studentName}`, margin, y);
+            doc.text(`Alunos: ${studentName}`, margin, y);
             y += 10;
             doc.text(`Turma: ${studentClass}`, margin, y);
             y += 10;
