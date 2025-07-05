@@ -17,6 +17,7 @@
         #student-info { display: none; margin-top: 1rem; }
         #activity-log { font-size: 0.9rem; color: #666; margin-top: 1rem; }
         .important-notice { color: #d32f2f; font-weight: bold; margin: 1rem 0; }
+        .colab-link { margin-top: 0.5rem; }
     </style>
 </head>
 <body class="bg-gray-100 p-6">
@@ -486,24 +487,40 @@ print(media)
                     <p>Escrevam um código em Python que crie variáveis para armazenar o nome e a idade de uma pessoa e exiba uma mensagem usando concatenação com f-strings. Exemplo de saída: 'Ana tem 20 anos'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q22" rows="6" placeholder="Digite seu código aqui..."></textarea>
+                    <div class="colab-link">
+                        <label for="q22-colab" class="block mb-1">Link do Google Colab:</label>
+                        <input type="text" id="q22-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
+                    </div>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 23</h2>
                     <p>Escrevam um código em Python que crie uma variável para armazenar o preço de um produto e exiba o preço com um desconto de 10% usando um operador aritmético. Exemplo de saída: 'Preço com desconto: 90.0'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q23" rows="6" placeholder="Digite seu código aqui..."></textarea>
+                    <div class="colab-link">
+                        <label for="q23-colab" class="block mb-1">Link do Google Colab:</label>
+                        <input type="text" id="q23-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
+                    </div>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 24</h2>
                     <p>Escrevam um código em Python que peça ao usuário sua idade e verifique se ele pode votar (idade >= 16). Exiba uma mensagem usando concatenação. Exemplo de saída: 'Olá, João, você pode votar'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q24" rows="6" placeholder="Digite seu código aqui..."></textarea>
+                    <div class="colab-link">
+                        <label for="q24-colab" class="block mb-1">Link do Google Colab:</label>
+                        <input type="text" id="q24-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
+                    </div>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 25</h2>
                     <p>Escrevam um código em Python que peça ao usuário uma nota (0 a 10) e classifique-a: 'Aprovado' (nota >= 7), 'Recuperação' (nota >= 5 e < 7), ou 'Reprovado' (nota < 5). Exiba com concatenação. Exemplo de saída: 'Nota 8: Aprovado'. Testem no Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q25" rows="6" placeholder="Digite seu código aqui..."></textarea>
+                    <div class="colab-link">
+                        <label for="q25-colab" class="block mb-1">Link do Google Colab:</label>
+                        <input type="text" id="q25-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
+                    </div>
                 </div>
                 <div class="question">
                     <h2 class="text-xl font-semibold mb-2">Questão 26</h2>
@@ -515,6 +532,10 @@ print(media)
                     <p class="text-blue-500 mt-2">Nota: Testem seu código no Google Colab.</p>
                     <p class="mt-2"><strong>Resposta:</strong></p>
                     <textarea class="answer-input" id="q26" rows="10" placeholder="Digite seu código aqui, incluindo comentários e justificativas para comandos avançados..."></textarea>
+                    <div class="colab-link">
+                        <label for="q26-colab" class="block mb-1">Link do Google Colab:</label>
+                        <input type="text" id="q26-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
+                    </div>
                 </div>
             </div>
 
@@ -651,21 +672,34 @@ print(media)
                 y += 2;
             }
 
-            // Coletar respostas de código (22-26) com tratamento de texto longo
+            // Coletar respostas de código (22-26) com tratamento de texto longo e links do Colab
             for (let i = 22; i <= 26; i++) {
                 const textarea = document.getElementById(`q${i}`);
                 const answer = textarea ? textarea.value : 'Não respondido';
+                const colabLink = document.getElementById(`q${i}-colab`) ? document.getElementById(`q${i}-colab`).value : 'Sem link';
                 doc.setFontSize(10);
                 doc.text(`Questão ${i}:`, margin, y);
                 y += 5;
-                const lines = doc.splitTextToSize(answer, pageWidth - (2 * margin) - 10); // Ajustar largura máxima
-                for (let line of lines) {
+                const codeLines = doc.splitTextToSize(answer, pageWidth - (2 * margin) - 10);
+                for (let line of codeLines) {
                     if (y > 280) {
                         doc.addPage();
                         y = 10;
                     }
                     doc.text(line, margin, y);
-                    y += 4; // Espaçamento menor
+                    y += 4;
+                }
+                if (colabLink !== 'Sem link') {
+                    y += 2;
+                    const linkLines = doc.splitTextToSize(`Link do Colab: ${colabLink}`, pageWidth - (2 * margin) - 10);
+                    for (let line of linkLines) {
+                        if (y > 280) {
+                            doc.addPage();
+                            y = 10;
+                        }
+                        doc.text(line, margin, y);
+                        y += 4;
+                    }
                 }
                 y += 4; // Espaçamento extra após a questão
             }
@@ -684,22 +718,6 @@ print(media)
                 }
                 doc.text(line, margin, y);
                 y += 4;
-            }
-
-            // Adicionar espaço para link do Colab
-            y += 10;
-            doc.setFontSize(12);
-            doc.text('Link do Google Colab (cole o link aqui):', margin, y);
-            y += 10;
-            doc.setFontSize(10);
-            const colabLines = doc.splitTextToSize('________________________________________________________________________________', pageWidth - (2 * margin) - 10);
-            for (let line of colabLines) {
-                if (y > 280) {
-                    doc.addPage();
-                    y = 10;
-                }
-                doc.text(line, margin, y);
-                y += 5;
             }
 
             // Salvar PDF
