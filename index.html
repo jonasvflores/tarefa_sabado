@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
+
         body { font-family: Arial, sans-serif; }
         .code-block { background-color: #f4f4f4; padding: 1rem; border-radius: 0.5rem; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
         .question { margin: 2rem 0; }
@@ -18,14 +19,16 @@
         #activity-log { font-size: 0.9rem; color: #666; margin-top: 1rem; }
         .important-notice { color: #d32f2f; font-weight: bold; margin: 1rem 0; }
     </style>
+
+
 </head>
 <body class="bg-gray-100 p-6">
+    
     <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
         <h1 class="text-3xl font-bold mb-6 text-center">Tarefa Avaliativa de Programação</h1>
         <h2 class="text-xl font-semibold mb-4">Instruções</h2>
         <p class="mb-4">Esta tarefa deve ser realizada em dupla ou trio (máximo de três pessoas) e vale 3 pontos. Leiam cada questão com atenção e forneçam as respostas solicitadas. Para questões de múltipla escolha, selecionem a alternativa correta. Para questões de ordenação, indiquem a sequência correta dos passos inserindo os números correspondentes a cada passo. Um exemplo de algoritmo com 5 passos está disponível abaixo. Para questões de código, escrevam o código em Python e, se solicitado, testem no Google Colab. Podem pesquisar conteúdo para auxiliar nas respostas, mas tenham cuidado ao usar comandos não aprendidos em aula (como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code>), pois podem complicar a depuração em caso de erros. Na Questão 26, o jogo de RPG é um guia: podem seguir exatamente o exemplo ou criar outro jogo ou uma solução simples, desde que usem <code>if</code>, <code>elif</code> e <code>else</code> como base. Certifiquem-se de que as respostas sejam claras e completas. Após completarem, cliquem em "Exportar Respostas em PDF" para baixar um arquivo PDF com suas respostas e log de atividades. <span class="important-notice">IMPORTANTE: Sempre cliquem em "Exportar Respostas em PDF" ao final para salvar o trabalho. Se não terminarem por falta de tempo, continuem na próxima aula, mas não esqueçam de baixar o PDF. Qualquer dúvida, entrem em contato pelo meu WhatsApp.</span></p>
 
-        <!-- Exemplo de Algoritmo -->
         <h2 class="text-xl font-semibold mb-2">Exemplo de Algoritmo</h2>
         <p class="mb-2"><strong>Exemplo:</strong> Reorganizem os passos abaixo para criar um algoritmo que calcula a área de um retângulo. Insiram o número correspondente (1 a 5) para cada passo na ordem lógica.</p>
         <ul>
@@ -533,7 +536,6 @@ print(media)
         let activityLog = [];
         let awayTimeStart = null;
 
-        // Capturar eventos de Ctrl + C
         document.addEventListener('keydown', (event) => {
             if (event.ctrlKey && event.key === 'c') {
                 const selectedText = window.getSelection().toString();
@@ -545,7 +547,6 @@ print(media)
             }
         });
 
-        // Monitorar trocas de tela (visibilidade)
         document.addEventListener('visibilitychange', () => {
             const timestamp = new Date().toLocaleTimeString();
             if (document.hidden) {
@@ -560,12 +561,10 @@ print(media)
             }
         });
 
-        // Atualizar log na tela
         function updateActivityLog() {
             document.getElementById('activity-log').textContent = `Log de Atividades: ${activityLog.join('; ')}`;
         }
 
-        // Iniciar tarefa com nome e turma
         document.getElementById('start-task').addEventListener('click', () => {
             studentName = document.getElementById('student-name').value.trim();
             studentClass = document.getElementById('student-class').value.trim();
@@ -579,14 +578,12 @@ print(media)
             }
         });
 
-        // Exportar para PDF
         document.getElementById('export-pdf').addEventListener('click', () => {
             const doc = new jsPDF();
             const pageWidth = doc.internal.pageSize.getWidth();
             const margin = 10;
             let y = 10;
 
-            // Adicionar cabeçalho
             doc.setFontSize(16);
             doc.text('Tarefa Avaliativa de Programação', margin, y);
             y += 10;
@@ -598,12 +595,10 @@ print(media)
             doc.text(`Data: ${new Date().toLocaleDateString()} às ${new Date().toLocaleTimeString()}`, margin, y);
             y += 15;
 
-            // Adicionar respostas
             doc.setFontSize(14);
             doc.text('Respostas:', margin, y);
             y += 10;
 
-            // Coletar respostas de múltipla escolha (1-17)
             for (let i = 1; i <= 17; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
                 const answer = selected ? selected.value : 'Não respondido';
@@ -612,7 +607,6 @@ print(media)
                 if (y > 280) { doc.addPage(); y = 10; }
             }
 
-            // Coletar respostas de ordenação (18-21, 27-29)
             for (let i = 18; i <= 21; i++) {
                 const maxSteps = i === 18 ? 4 : i === 21 ? 12 : 3;
                 const order = [];
@@ -636,7 +630,6 @@ print(media)
                 if (y > 280) { doc.addPage(); y = 10; }
             }
 
-            // Coletar respostas de código (22-26) com tratamento de texto longo
             for (let i = 22; i <= 26; i++) {
                 const textarea = document.getElementById(`q${i}`);
                 const answer = textarea ? textarea.value : 'Não respondido';
@@ -652,10 +645,9 @@ print(media)
                     doc.text(line, margin, y);
                     y += 5;
                 }
-                y += 5; // Espaçamento extra após a questão
+                y += 5; 
             }
 
-            // Adicionar log de atividades
             y += 15;
             doc.setFontSize(14);
             doc.text('Log de Atividades:', margin, y);
