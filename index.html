@@ -1,728 +1,461 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarefa Avaliativa de Programação</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Teste Vocacional para Meu Amor </title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .code-block { background-color: #f4f4f4; padding: 1rem; border-radius: 0.5rem; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap; }
-        .question { margin: 2rem 0; }
-        .answer-input { width: 100%; padding: 0.5rem; border: 2px solid #a3e4d7; border-radius: 4px; }
-        .answer-input:focus { border-color: #27ae60; outline: none; background-color: #d1f2eb; }
-        .radio-option { margin: 0.5rem 0; }
-        .order-input { width: 60px; margin-right: 1rem; }
-        #student-info { display: none; margin-top: 1rem; }
-        #activity-log { font-size: 0.9rem; color: #666; margin-top: 1rem; }
-        .important-notice { color: #d32f2f; font-weight: bold; margin: 1rem 0; }
-        .colab-link { margin-top: 0.5rem; }
-    </style>
-</head>
-<body class="bg-gray-100 p-6">
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
-        <h1 class="text-3xl font-bold mb-6 text-center">Tarefa Avaliativa de Programação</h1>
-        <h2 class="text-xl font-semibold mb-4">Instruções</h2>
-        <p class="mb-4">Esta tarefa deve ser realizada em dupla ou trio (máximo de três pessoas) e vale 3 pontos. Leiam cada questão com atenção e forneçam as respostas solicitadas. Para questões de múltipla escolha, selecionem a alternativa correta. Para questões de ordenação, indiquem a sequência correta dos passos inserindo os números correspondentes a cada passo. Um exemplo de algoritmo com 5 passos está disponível abaixo. Para questões de código, escrevam o código em Python e, se solicitado, testem no Google Colab. Podem pesquisar conteúdo para auxiliar nas respostas, mas tenham cuidado ao usar comandos não aprendidos em aula (como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code>), pois podem complicar a depuração em caso de erros. Na Questão 26, o jogo de RPG é um guia: podem seguir exatamente o exemplo ou criar outro jogo ou uma solução simples, desde que usem <code>if</code>, <code>elif</code> e <code>else</code> como base. Certifiquem-se de que as respostas sejam claras e completas. Após completarem, cliquem em "Exportar Respostas em PDF" para baixar um arquivo PDF com suas respostas e log de atividades. <span class="important-notice">IMPORTANTE: Sempre cliquem em "Exportar Respostas em PDF" ao final para salvar o trabalho. Se não terminarem por falta de tempo, continuem na próxima aula, mas não esqueçam de baixar o PDF. Qualquer dúvida, entrem em contato pelo meu WhatsApp.</span></p>
-
-        <!-- Exemplo de Algoritmo -->
-        <h2 class="text-xl font-semibold mb-2">Exemplo de Algoritmo</h2>
-        <p class="mb-2"><strong>Exemplo:</strong> Reorganizem os passos abaixo para criar um algoritmo que calcula a área de um retângulo. Insiram o número correspondente (1 a 5) para cada passo na ordem lógica.</p>
-        <ul>
-            <li>Calcular a área = comprimento * largura</li>
-            <li>Ler o comprimento do retângulo</li>
-            <li>Exibir a área calculada</li>
-            <li>Ler a largura do retângulo</li>
-            <li>Validar se comprimento e largura são positivos</li>
-        </ul>
-        <p class="mt-2"><strong>Resposta:</strong></p>
-        <div>
-            <div class="flex items-center mb-2"><span class="order-input">2</span> Ler o comprimento do retângulo</div>
-            <div class="flex items-center mb-2"><span class="order-input">3</span> Ler a largura do retângulo</div>
-            <div class="flex items-center mb-2"><span class="order-input">4</span> Validar se comprimento e largura são positivos</div>
-            <div class="flex items-center mb-2"><span class="order-input">1</span> Calcular a área = comprimento * largura</div>
-            <div class="flex items-center mb-2"><span class="order-input">5</span> Exibir a área calculada</div>
-        </div>
-
-        <div id="student-form">
-            <h2 class="text-xl font-semibold mb-2">Informações do Aluno</h2>
-            <div class="mb-4">
-                <label for="student-name" class="block mb-1">Nome:</label>
-                <input type="text" id="student-name" class="answer-input" placeholder="Digite os nomes da dupla/trio" required>
-            </div>
-            <div class="mb-4">
-                <label for="student-class" class="block mb-1">Turma:</label>
-                <input type="text" id="student-class" class="answer-input" placeholder="Digite sua turma" required>
-            </div>
-            <button id="start-task" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">Iniciar Tarefa</button>
-        </div>
-
-        <div id="student-info" class="mt-6">
-            <h2 class="text-xl font-semibold mb-2">Bem-vindos, <span id="display-name"></span> (Turma: <span id="display-class"></span>)</h2>
-            <p class="important-notice">Lembrem-se: Ao finalizarem, cliquem em "Exportar Respostas em PDF" para salvar suas respostas. Se não terminarem, continuem na próxima aula, mas não esqueçam de baixar o PDF! Qualquer dúvida, entrem em contato pelo meu WhatsApp.</p>
-            <div id="questions">
-                <!-- Seção: Questões de Comandos/Códigos -->
-                <h2 class="text-2xl font-bold mt-8 mb-4">Questões de Comandos/Códigos</h2>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 1</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-x = 10
-y = 3
-print(x % y)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q1" value="3"> a) 3</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="7"> b) 7</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="30"> c) 30</label>
-                        <label class="radio-option"><input type="radio" name="q1" value="1"> d) 1</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 2</h2>
-                    <p>Qual é o valor de z após a execução do seguinte código?</p>
-                    <div class="code-block">
-z = 5
-z *= 4
-print(z)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q2" value="9"> a) 9</label>
-                        <label class="radio-option"><input type="radio" name="q2" value="20"> b) 20</label>
-                        <label class="radio-option"><input type="radio" name="q2" value="1"> c) 1</label>
-                        <label class="radio-option"><input type="radio" name="q2" value="5"> d) 5</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 3</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-a = 15
-b = 10
-print(a >= b)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q3" value="True"> a) True</label>
-                        <label class="radio-option"><input type="radio" name="q3" value="False"> b) False</label>
-                        <label class="radio-option"><input type="radio" name="q3" value="15"> c) 15</label>
-                        <label class="radio-option"><input type="radio" name="q3" value="10"> d) 10</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 4</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-x = 8
-y = 2
-print(x > 5 and y < 3)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q4" value="False"> a) False</label>
-                        <label class="radio-option"><input type="radio" name="q4" value="True"> b) True</label>
-                        <label class="radio-option"><input type="radio" name="q4" value="8"> c) 8</label>
-                        <label class="radio-option"><input type="radio" name="q4" value="2"> d) 2</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 5</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-lista = ['gato', 'cachorro', 'pássaro']
-animal = 'gato'
-print(animal in lista)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q5" value="False"> a) False</label>
-                        <label class="radio-option"><input type="radio" name="q5" value="True"> b) True</label>
-                        <label class="radio-option"><input type="radio" name="q5" value="gato"> c) gato</label>
-                        <label class="radio-option"><input type="radio" name="q5" value="None"> d) None</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 6</h2>
-                    <p>Qual é o tipo de dado retornado pelo seguinte código?</p>
-                    <div class="code-block">
-x = 10 / 2
-print(type(x))
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q6" value="int"> a) int</label>
-                        <label class="radio-option"><input type="radio" name="q6" value="str"> b) str</label>
-                        <label class="radio-option"><input type="radio" name="q6" value="float"> c) float</label>
-                        <label class="radio-option"><input type="radio" name="q6" value="bool"> d) bool</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 7</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-p = 7
-q = 7
-print(p != q)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q7" value="True"> a) True</label>
-                        <label class="radio-option"><input type="radio" name="q7" value="8"> b) 8</label>
-                        <label class="radio-option"><input type="radio" name="q7" value="False"> c) False</label>
-                        <label class="radio-option"><input type="radio" name="q7" value="0"> d) 0</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 8</h2>
-                    <p>Qual é o resultado do seguinte código, que parece correto, mas pode enganar?</p>
-                    <div class="code-block">
-x = 20
-y = 4
-print(x / y + 1)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q8" value="6.0"> a) 6.0</label>
-                        <label class="radio-option"><input type="radio" name="q8" value="5.0"> b) 5.0</label>
-                        <label class="radio-option"><input type="radio" name="q8" value="80"> c) 80</label>
-                        <label class="radio-option"><input type="radio" name="q8" value="16"> d) 16</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 9</h2>
-                    <p>Qual é o valor de y após a execução do seguinte código?</p>
-                    <div class="code-block">
-y = 12
-y //= 5
-print(y)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q9" value="3"> a) 3</label>
-                        <label class="radio-option"><input type="radio" name="q9" value="60"> b) 60</label>
-                        <label class="radio-option"><input type="radio" name="q9" value="7"> c) 7</label>
-                        <label class="radio-option"><input type="radio" name="q9" value="2"> d) 2</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 10</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-texto = 'python'
-letra = 'z'
-print(letra not in texto)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q10" value="False"> a) False</label>
-                        <label class="radio-option"><input type="radio" name="q10" value="python"> b) python</label>
-                        <label class="radio-option"><input type="radio" name="q10" value="z"> c) z</label>
-                        <label class="radio-option"><input type="radio" name="q10" value="True"> d) True</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 11</h2>
-                    <p>Qual é o resultado do seguinte código usando concatenação?</p>
-                    <div class="code-block">
-nome = 'Ana'
-saudacao = 'Olá, ' + nome + '!'
-print(saudacao)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q11" value="Olá, nome!"> a) Olá, nome!</label>
-                        <label class="radio-option"><input type="radio" name="q11" value="Ana"> b) Ana</label>
-                        <label class="radio-option"><input type="radio" name="q11" value="Olá, Ana!"> c) Olá, Ana!</label>
-                        <label class="radio-option"><input type="radio" name="q11" value="Erro"> d) Erro</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 12</h2>
-                    <p>Qual é o resultado do seguinte código, que parece correto, mas pode enganar?</p>
-                    <div class="code-block">
-preco = 100
-desconto = 30
-preco_final = preco - desconto / 2
-print(preco_final)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q12" value="70"> a) 70</label>
-                        <label class="radio-option"><input type="radio" name="q12" value="85"> b) 85</label>
-                        <label class="radio-option"><input type="radio" name="q12" value="50"> c) 50</label>
-                        <label class="radio-option"><input type="radio" name="q12" value="Erro"> d) Erro</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 13</h2>
-                    <p>Qual é o resultado do seguinte código?</p>
-                    <div class="code-block">
-nota = 85
-frequencia = 70
-if nota >= 70 and frequencia >= 75:
-    print('Aprovado')
-else:
-    print('Reprovado')
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q13" value="Aprovado"> a) Aprovado</label>
-                        <label class="radio-option"><input type="radio" name="q13" value="Erro"> b) Erro</label>
-                        <label class="radio-option"><input type="radio" name="q13" value="Nenhum resultado"> c) Nenhum resultado</label>
-                        <label class="radio-option"><input type="radio" name="q13" value="Reprovado"> d) Reprovado</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 14</h2>
-                    <p>Qual é o resultado do seguinte código, que pode gerar confusão?</p>
-                    <div class="code-block">
-idade = 16
-if idade >= 16:
-    print('Pode votar')
-else:
-    print('Não pode votar')
-if idade >= 18:
-    print('Pode dirigir')
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q14" value="Pode votar Pode dirigir"> a) Pode votar Pode dirigir</label>
-                        <label class="radio-option"><input type="radio" name="q14" value="Pode votar"> b) Pode votar</label>
-                        <label class="radio-option"><input type="radio" name="q14" value="Não pode votar"> c) Não pode votar</label>
-                        <label class="radio-option"><input type="radio" name="q14" value="Erro"> d) Erro</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 15</h2>
-                    <p>Qual é o resultado do seguinte código com indentação incorreta que não causa erro, mas altera o comportamento?</p>
-                    <div class="code-block">
-idade = 20
-if idade >= 18:
-print('Adulto')
-else:
-    print('Menor')
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q15" value="Adulto"> a) Adulto</label>
-                        <label class="radio-option"><input type="radio" name="q15" value="Menor"> b) Menor</label>
-                        <label class="radio-option"><input type="radio" name="q15" value="Erro"> c) Erro</label>
-                        <label class="radio-option"><input type="radio" name="q15" value="Nenhum resultado"> d) Nenhum resultado</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 16</h2>
-                    <p>Qual é o resultado do seguinte código com concatenação e casting?</p>
-                    <div class="code-block">
-nome = 'João'
-idade = 15
-print('Olá, ' + nome + ', você tem ' + str(idade) + ' anos')
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q16" value="Olá, João, você tem 15 anos"> a) Olá, João, você tem 15 anos</label>
-                        <label class="radio-option"><input type="radio" name="q16" value="Erro"> b) Erro</label>
-                        <label class="radio-option"><input type="radio" name="q16" value="João tem 15 anos"> c) João tem 15 anos</label>
-                        <label class="radio-option"><input type="radio" name="q16" value="Olá, nome, você tem idade anos"> d) Olá, nome, você tem idade anos</label>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 17</h2>
-                    <p>Qual é o resultado do seguinte código, que parece calcular uma média corretamente, mas pode enganar?</p>
-                    <div class="code-block">
-nota1 = 8
-nota2 = 6
-media = nota1 + nota2 / 2
-print(media)
-                    </div>
-                    <div class="mt-2">
-                        <label class="radio-option"><input type="radio" name="q17" value="7.0"> a) 7.0</label>
-                        <label class="radio-option"><input type="radio" name="q17" value="11.0"> b) 11.0</label>
-                        <label class="radio-option"><input type="radio" name="q17" value="14.0"> c) 14.0</label>
-                        <label class="radio-option"><input type="radio" name="q17" value="Erro"> d) Erro</label>
-                    </div>
-                </div>
-
-                <!-- Seção: Questões de Algoritmos -->
-                <h2 class="text-2xl font-bold mt-8 mb-4">Questões de Algoritmos</h2>
-                <p class="important-notice">Lembrem-se: Podem pesquisar conteúdo para auxiliar nas respostas, mas cuidado com comandos não aprendidos, pois podem complicar a depuração. Não esqueçam de clicar em "Exportar Respostas em PDF" ao final! Qualquer dúvida, contatem pelo meu WhatsApp.</p>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 18</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que calcula o preço final de um produto com desconto. Insiram o número correspondente (1 a 4) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Ler o preço do produto</li>
-                        <li>Exibir o preço final</li>
-                        <li>Ler o percentual de desconto</li>
-                        <li>Calcular o preço final = preço - (preço * desconto / 100)</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q18-1" min="1" max="4" placeholder="Número"> Ler o preço do produto</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q18-2" min="1" max="4" placeholder="Número"> Exibir o preço final</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q18-3" min="1" max="4" placeholder="Número"> Ler o percentual de desconto</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q18-4" min="1" max="4" placeholder="Número"> Calcular o preço final = preço - (preço * desconto / 100)</div>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 19</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que verifica se um número é positivo ou negativo. Insiram o número correspondente (1 a 3) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Se número >= 0, exibir 'Positivo'</li>
-                        <li>Ler o número do usuário</li>
-                        <li>Senão, exibir 'Negativo'</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q19-1" min="1" max="3" placeholder="Número"> Se número >= 0, exibir 'Positivo'</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q19-2" min="1" max="3" placeholder="Número"> Ler o número do usuário</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q19-3" min="1" max="3" placeholder="Número"> Senão, exibir 'Negativo'</div>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 20</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que verifica se um aluno foi aprovado com base na nota. Insiram o número correspondente (1 a 3) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Se nota >= 7, exibir 'Aprovado'</li>
-                        <li>Ler a nota do aluno</li>
-                        <li>Senão, exibir 'Reprovado'</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q20-1" min="1" max="3" placeholder="Número"> Se nota >= 7, exibir 'Aprovado'</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q20-2" min="1" max="3" placeholder="Número"> Ler a nota do aluno</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q20-3" min="1" max="3" placeholder="Número"> Senão, exibir 'Reprovado'</div>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 21</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que programa um drone para realizar entregas. Insiram o número correspondente (1 a 12) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Monitorar espaço aéreo para outros drones ou aeronaves</li>
-                        <li>Verificar nível de carga da bateria</li>
-                        <li>Retornar à estação de despacho</li>
-                        <li>Confirmar localização de entrega usando GPS</li>
-                        <li>Calcular trajeto de voo até o endereço de entrega</li>
-                        <li>Desligar o sistema de propulsão</li>
-                        <li>Fixar pacote no compartimento de carga</li>
-                        <li>Liberar pacote no ponto de entrega designado</li>
-                        <li>Ativar sistema de propulsão do drone</li>
-                        <li>Escanear código de barras do pacote para detalhes da entrega</li>
-                        <li>Decolar da estação de despacho</li>
-                        <li>Navegar até o endereço de entrega</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-1" min="1" max="12" placeholder="Número"> Monitorar espaço aéreo para outros drones ou aeronaves</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-2" min="1" max="12" placeholder="Número"> Verificar nível de carga da bateria</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-3" min="1" max="12" placeholder="Número"> Retornar à estação de despacho</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-4" min="1" max="12" placeholder="Número"> Confirmar localização de entrega usando GPS</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-5" min="1" max="12" placeholder="Número"> Calcular trajeto de voo até o endereço de entrega</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-6" min="1" max="12" placeholder="Número"> Desligar o sistema de propulsão</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-7" min="1" max="12" placeholder="Número"> Fixar pacote no compartimento de carga</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-8" min="1" max="12" placeholder="Número"> Liberar pacote no ponto de entrega designado</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-9" min="1" max="12" placeholder="Número"> Ativar sistema de propulsão do drone</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-10" min="1" max="12" placeholder="Número"> Escanear código de barras do pacote para detalhes da entrega</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-11" min="1" max="12" placeholder="Número"> Decolar da estação de despacho</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q21-12" min="1" max="12" placeholder="Número"> Navegar até o endereço de entrega</div>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 27</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que calcula a média de duas notas de um aluno e verifica se ele foi aprovado. Insiram o número correspondente (1 a 5) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Ler a primeira nota do aluno</li>
-                        <li>Calcular a média = (nota1 + nota2) / 2</li>
-                        <li>Ler a segunda nota do aluno</li>
-                        <li>Se média >= 6, exibir 'Aprovado'; senão, exibir 'Reprovado'</li>
-                        <li>Exibir a média calculada</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q27-1" min="1" max="5" placeholder="Número"> Ler a primeira nota do aluno</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q27-2" min="1" max="5" placeholder="Número"> Calcular a média = (nota1 + nota2) / 2</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q27-3" min="1" max="5" placeholder="Número"> Ler a segunda nota do aluno</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q27-4" min="1" max="5" placeholder="Número"> Se média >= 6, exibir 'Aprovado'; senão, exibir 'Reprovado'</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q27-5" min="1" max="5" placeholder="Número"> Exibir a média calculada</div>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 28</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que converte uma temperatura de Celsius para Fahrenheit. Insiram o número correspondente (1 a 6) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Ler a temperatura em Celsius</li>
-                        <li>Calcular Fahrenheit = (Celsius * 9/5) + 32</li>
-                        <li>Exibir a temperatura em Fahrenheit</li>
-                        <li>Validar se o valor de Celsius é positivo</li>
-                        <li>Se inválido, exibir 'Temperatura inválida'</li>
-                        <li>Armazenar o resultado temporariamente</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q28-1" min="1" max="6" placeholder="Número"> Ler a temperatura em Celsius</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q28-2" min="1" max="6" placeholder="Número"> Calcular Fahrenheit = (Celsius * 9/5) + 32</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q28-3" min="1" max="6" placeholder="Número"> Exibir a temperatura em Fahrenheit</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q28-4" min="1" max="6" placeholder="Número"> Validar se o valor de Celsius é positivo</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q28-5" min="1" max="6" placeholder="Número"> Se inválido, exibir 'Temperatura inválida'</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q28-6" min="1" max="6" placeholder="Número"> Armazenar o resultado temporariamente</div>
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 29</h2>
-                    <p>Reorganizem os passos abaixo para criar um algoritmo que simula um sistema de autenticação de usuário. Insiram o número correspondente (1 a 8) para cada passo na ordem lógica.</p>
-                    <ul>
-                        <li>Exibir mensagem de erro e encerrar se credenciais inválidas</li>
-                        <li>Ler a senha do usuário</li>
-                        <li>Ler o nome de usuário</li>
-                        <li>Comparar nome de usuário e senha com o banco de dados</li>
-                        <li>Exibir mensagem de boas-vindas se autenticado</li>
-                        <li>Validar se o nome de usuário existe</li>
-                        <li>Armazenar tentativa de login no log</li>
-                        <li>Limpar a tela após autenticação</li>
-                    </ul>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-1" min="1" max="8" placeholder="Número"> Exibir mensagem de erro e encerrar se credenciais inválidas</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-2" min="1" max="8" placeholder="Número"> Ler a senha do usuário</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-3" min="1" max="8" placeholder="Número"> Ler o nome de usuário</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-4" min="1" max="8" placeholder="Número"> Comparar nome de usuário e senha com o banco de dados</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-5" min="1" max="8" placeholder="Número"> Exibir mensagem de boas-vindas se autenticado</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-6" min="1" max="8" placeholder="Número"> Validar se o nome de usuário existe</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-7" min="1" max="8" placeholder="Número"> Armazenar tentativa de login no log</div>
-                        <div class="flex items-center mb-2"><input type="number" class="order-input answer-input" id="q29-8" min="1" max="8" placeholder="Número"> Limpar a tela após autenticação</div>
-                    </div>
-                </div>
-
-                <!-- Seção: Questões de Lógica -->
-                <h2 class="text-2xl font-bold mt-8 mb-4">Questões de Lógica</h2>
-                <p class="important-notice">Lembrem-se: Podem pesquisar conteúdo para auxiliar nas respostas, mas cuidado com comandos não aprendidos, pois podem complicar a depuração. Não esqueçam de clicar em "Exportar Respostas em PDF" ao final! Qualquer dúvida, contatem pelo meu WhatsApp.</p>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 22</h2>
-                    <p>Escrevam um código em Python que crie variáveis para armazenar o nome e a idade de uma pessoa e exiba uma mensagem usando concatenação com f-strings. Exemplo de saída: 'Ana tem 20 anos'. Testem no Colab.</p>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <textarea class="answer-input" id="q22" rows="6" placeholder="Digite seu código aqui..."></textarea>
-                    <div class="colab-link">
-                        <label for="q22-colab" class="block mb-1">Link do Google Colab:</label>
-                        <input type="text" id="q22-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 23</h2>
-                    <p>Escrevam um código em Python que crie uma variável para armazenar o preço de um produto e exiba o preço com um desconto de 10% usando um operador aritmético. Exemplo de saída: 'Preço com desconto: 90.0'. Testem no Colab.</p>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <textarea class="answer-input" id="q23" rows="6" placeholder="Digite seu código aqui..."></textarea>
-                    <div class="colab-link">
-                        <label for="q23-colab" class="block mb-1">Link do Google Colab:</label>
-                        <input type="text" id="q23-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 24</h2>
-                    <p>Escrevam um código em Python que peça ao usuário sua idade e verifique se ele pode votar (idade >= 16). Exiba uma mensagem usando concatenação. Exemplo de saída: 'Olá, João, você pode votar'. Testem no Colab.</p>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <textarea class="answer-input" id="q24" rows="6" placeholder="Digite seu código aqui..."></textarea>
-                    <div class="colab-link">
-                        <label for="q24-colab" class="block mb-1">Link do Google Colab:</label>
-                        <input type="text" id="q24-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 25</h2>
-                    <p>Escrevam um código em Python que peça ao usuário uma nota (0 a 10) e classifique-a: 'Aprovado' (nota >= 7), 'Recuperação' (nota >= 5 e < 7), ou 'Reprovado' (nota < 5). Exiba com concatenação. Exemplo de saída: 'Nota 8: Aprovado'. Testem no Colab.</p>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <textarea class="answer-input" id="q25" rows="6" placeholder="Digite seu código aqui..."></textarea>
-                    <div class="colab-link">
-                        <label for="q25-colab" class="block mb-1">Link do Google Colab:</label>
-                        <input type="text" id="q25-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
-                    </div>
-                </div>
-                <div class="question">
-                    <h2 class="text-xl font-semibold mb-2">Questão 26</h2>
-                    <p>Imaginemos que vocês estão criando um mini livro-jogo de RPG para iniciantes, onde o jogador toma decisões que moldam sua aventura. O programa deve guiar o jogador por algumas escolhas iniciais e uma sequência de eventos. Aqui está como funciona: primeiro, perguntem ao jogador com qual estilo ele prefere lutar — espada, magia ou furtividade — e definam sua classe com base na resposta (em minúsculas): 'espada' vira Guerreiro, 'magia' vira Mago, 'furtividade' vira Ladino, e qualquer outra coisa resulta em Aventureiro sem classe. Depois, peçam o nome do personagem; se ele deixar em branco ou só colocar espaços, usem 'Aventureiro Desconhecido'. Em seguida, deixem o jogador escolher uma arma entre espada longa, cajado arcano ou adaga afiada (em minúsculas), atribuindo 'nenhuma arma' se a escolha for inválida. Perguntem também sobre um item — poção de cura, mapa antigo ou corda resistente — e, se a resposta não bater, definam como 'nenhum item'. Por fim, escolham o destino: floresta sombria, montanha gelada ou vila tranquila, ou 'lugar desconhecido' se for algo diferente.</p>
-                    <p>Depois das escolhas iniciais, criem uma sequência simples na história. Por exemplo, se o destino for a floresta sombria, o jogador encontra um lobo e pode decidir lutar, fugir ou usar um item. Se escolher lutar, mostrem uma mensagem baseada na arma, como 'Vocês atacam o lobo com sua espada longa!'. Se optarem por fugir, exibam 'Vocês escapam por pouco!'. Se usarem um item, descrevam o efeito, como 'Vocês usam a poção de cura para se recuperar!'. Para outros destinos, adaptem o desafio — na montanha gelada, pode ser uma tempestade; na vila tranquila, um enigma. Detalhem essas partes no código.</p>
-                    <p>No final, resumam tudo com uma frase como 'Vocês são [nome], um [classe] que carrega [arma] e [item]. Sua aventura começa em [destino].'. Antes de prosseguirem, perguntem se o jogador quer iniciar o jogo ('sim' ou 'não', em minúsculas): se sim, sigam com a sequência de escolhas e mostrem o resultado; se não, exibam 'Até a próxima aventura!'; qualquer outra resposta leva a 'Resposta inválida. Aventura cancelada.'.</p>
-                    <p>Como exemplo, imaginem que o jogador escolhe Mago (com 'magia'), nomeia o personagem de Eliana, pega cajado arcano e poção de cura, e vai para a floresta sombria. O programa diria: 'Vocês são Eliana, um Mago que carrega cajado arcano e poção de cura. Sua aventura começa em floresta sombria.' Com 'sim', continuaria: 'Vocês encontram um lobo na floresta sombria. O que desejam fazer: lutar, fugir ou usar um item?' Se escolherem 'usar um item', mostraria 'Vocês usam a poção de cura para se recuperar!' e encerraria.</p>
-                    <p>Vocês podem seguir exatamente este exemplo ou criar outro jogo ou uma solução simples, desde que usem <code>if</code>, <code>elif</code> e <code>else</code> como base. Adicionem comentários claros no código para explicar cada parte, como '# Solicita a escolha da classe'. Se usarem comandos como <code>def</code>, <code>try</code>, <code>except</code> ou <code>continue</code> (que ainda não vimos em aula), justifiquem em comentários por que eles ajudam a deixar o código mais robusto ou organizado. Não esqueçam de testar tudo no Google Colab!</p>
-                    <p class="text-blue-500 mt-2">Nota: Testem seu código no Google Colab.</p>
-                    <p class="mt-2"><strong>Resposta:</strong></p>
-                    <textarea class="answer-input" id="q26" rows="10" placeholder="Digite seu código aqui, incluindo comentários e justificativas para comandos avançados..."></textarea>
-                    <div class="colab-link">
-                        <label for="q26-colab" class="block mb-1">Link do Google Colab:</label>
-                        <input type="text" id="q26-colab" class="answer-input" placeholder="Cole o link do Colab aqui">
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-6 text-center">
-                <p class="important-notice">Lembrem-se: Cliquem em "Exportar Respostas em PDF" para salvar suas respostas. Não finalizem sem exportar! Qualquer dúvida, contatem pelo meu WhatsApp.</p>
-                <button id="export-pdf" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">Exportar Respostas em PDF</button>
-            </div>
-            <div id="activity-log" class="mt-4">Log de Atividades: Nenhum evento registrado.</div>
-        </div>
-    </div>
-
-    <script>
-        const { jsPDF } = window.jspdf;
-        let studentName = '';
-        let studentClass = '';
-        let activityLog = [];
-        let awayTimeStart = null;
-
-        // Capturar eventos de Ctrl + C
-        document.addEventListener('keydown', (event) => {
-            if (event.ctrlKey && event.key === 'c') {
-                const selectedText = window.getSelection().toString();
-                if (selectedText) {
-                    const timestamp = new Date().toLocaleTimeString();
-                    activityLog.push(`Copiado às ${timestamp}: "${selectedText}"`);
-                    updateActivityLog();
-                }
-            }
-        });
-
-        // Monitorar trocas de tela (visibilidade)
-        document.addEventListener('visibilitychange', () => {
-            const timestamp = new Date().toLocaleTimeString();
-            if (document.hidden) {
-                awayTimeStart = Date.now();
-                activityLog.push(`Saiu da tela às ${timestamp}`);
-                updateActivityLog();
-            } else if (awayTimeStart) {
-                const awayDuration = Math.floor((Date.now() - awayTimeStart) / 1000); // Em segundos
-                activityLog.push(`Retornou à tela às ${timestamp} (tempo fora: ${awayDuration} segundos)`);
-                awayTimeStart = null;
-                updateActivityLog();
-            }
-        });
-
-        // Atualizar log na tela
-        function updateActivityLog() {
-            document.getElementById('activity-log').textContent = `Log de Atividades: ${activityLog.join('; ')}`;
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #e8f4fd 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
         }
 
-        // Iniciar tarefa com nome e turma
-        document.getElementById('start-task').addEventListener('click', () => {
-            studentName = document.getElementById('student-name').value.trim();
-            studentClass = document.getElementById('student-class').value.trim();
-            if (studentName && studentClass) {
-                document.getElementById('display-name').textContent = studentName;
-                document.getElementById('display-class').textContent = studentClass;
-                document.getElementById('student-form').style.display = 'none';
-                document.getElementById('student-info').style.display = 'block';
-            } else {
-                alert('Por favor, preencham os nomes da dupla/trio e a turma!');
+        h1,
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #d63384;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .question {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(214, 51, 132, 0.1);
+            display: none;
+            /* Escondidas inicialmente */
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        .options label {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: #fff5f7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-left: 3px solid #d63384;
+        }
+
+        .options label:hover {
+            background: #fce7f3;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .progress {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 10px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #d63384, #a855f7, #06b6d4);
+            height: 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #next,
+        #submit {
+            background: #d63384;
+            color: white;
+        }
+
+        #next:hover,
+        #submit:hover {
+            background: #be185d;
+        }
+
+        #reset {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        #reset:hover {
+            background: #d1d5db;
+        }
+
+        #result {
+            background: #fff;
+            border-left: 6px solid #d63384;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .profile-bar {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .bar-item {
+            flex: 1;
+            background: #e9ecef;
+            border-radius: 5px;
+            height: 20px;
+            position: relative;
+        }
+
+        .bar-fill {
+            background: #d63384;
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+
+        .bar-label {
+            position: absolute;
+            top: 25px;
+            font-size: 12px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .tips {
+            background: #fdf2f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 3px solid #d63384;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
             }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🌹 Teste Vocacional para Meu Amor</h1>
+    <p class="intro">Teste vocacional para uma moça indecisa, mas que é meu amor💕</p>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <form id="quizForm">
+        <!-- Bloco 1: Interesses (Perguntas 1-4) — Carinhosas e sutis -->
+        <div class="question active" id="q1">
+            <h3>1. No seu tempo livre, o que te faz perder a noção do tempo, amor?</h3>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> Experimentar com ideias novas, como montar algo visual
+                    ou contar histórias que me tocam.</label>
+                <label><input type="radio" name="q1" value="B"> Conversar com amigos sobre sentimentos ou planos,
+                    trocando experiências que aquecem o coração.</label>
+                <label><input type="radio" name="q1" value="C"> Arrumar espaços ou listas para que tudo fique no lugar
+                    certo e fluido, me dando paz.</label>
+            </div>
+            <button type="button" id="next1">Próxima, minha linda</button>
+        </div>
+
+        <div class="question" id="q2">
+            <h3>2. Qual tipo de notícia ou vídeo te prende mais na tela, gata?</h3>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> Conteúdos criativos, como designs inovadores ou
+                    tendências culturais que inspiram.</label>
+                <label><input type="radio" name="q2" value="B"> Histórias reais de superação ou dicas para se conectar
+                    melhor com as pessoas que amo.</label>
+                <label><input type="radio" name="q2" value="C"> Dicas práticas para otimizar rotinas ou resolver
+                    problemas comuns, com calma.</label>
+            </div>
+            <button type="button" id="next2">Próxima</button>
+        </div>
+
+        <div class="question" id="q3">
+            <h3>3. Em um feriado, você preferiria..., amor da minha vida?</h3>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> Criar algo do zero, como um álbum de fotos ou um plano
+                    divertido que me faça sorrir.</label>
+                <label><input type="radio" name="q3" value="B"> Passar tempo com gente querida, compartilhando risadas e
+                    conselhos que unem.</label>
+                <label><input type="radio" name="q3" value="C"> Planejar o dia com eficiência, garantindo que nada saia
+                    do controle e tudo flua bem.</label>
+            </div>
+            <button type="button" id="next3">Próxima</button>
+        </div>
+
+        <div class="question" id="q4">
+            <h3>4. O que te energiza mais em um hobby, minha musa?</h3>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A liberdade de imaginar e transformar ideias em algo
+                    tangível que me emociona.</label>
+                <label><input type="radio" name="q4" value="B"> O contato humano, vendo como minhas ações afetam os
+                    outros positivamente, com ternura.</label>
+                <label><input type="radio" name="q4" value="C"> A sensação de ordem e conquista ao completar tarefas
+                    passo a passo, me deixando serena.</label>
+            </div>
+            <button type="button" id="next4">Próxima</button>
+        </div>
+
+        <!-- Bloco 2: Habilidades (Perguntas 5-7) — Ligando à experiência dela com carinho -->
+        <div class="question" id="q5">
+            <h3>5. No seu trabalho atual (como no mercado), o que você faz com mais naturalidade, rainha?</h3>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> Atrair olhares ou conversas com toques criativos, como
+                    sugestões personalizadas que encantam.</label>
+                <label><input type="radio" name="q5" value="B"> Apoiar colegas ou clientes com escuta atenta e soluções
+                    empáticas que tocam.</label>
+                <label><input type="radio" name="q5" value="C"> Manter o fluxo das coisas organizadas, evitando bagunças
+                    ou atrasos com maestria.</label>
+            </div>
+            <button type="button" id="next5">Próxima</button>
+        </div>
+
+        <div class="question" id="q6">
+            <h3>6. Quando enfrenta um desafio em grupo, sua primeira reação é..., amor?</h3>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> Sugerir uma abordagem fresca e fora da curva para animar
+                    o time com brilho.</label>
+                <label><input type="radio" name="q6" value="B"> Ouvir todos e mediar para que cada um se sinta
+                    valorizado e abraçado.</label>
+                <label><input type="radio" name="q6" value="C"> Mapear os passos lógicos para resolver de forma segura e
+                    eficiente, com confiança.</label>
+            </div>
+            <button type="button" id="next6">Próxima</button>
+        </div>
+
+        <div class="question" id="q7">
+            <h3>7. Qual dessas atividades te dá mais orgulho quando domina, minha linda?</h3>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> Montar narrativas ou visuais que cativam e surpreendem,
+                    me enchendo de luz.</label>
+                <label><input type="radio" name="q7" value="B"> Guiar alguém através de uma conversa que muda sua
+                    perspectiva, com gentileza.</label>
+                <label><input type="radio" name="q7" value="C"> Aperfeiçoar sistemas para que rodem sem falhas ou
+                    imprevistos, me dando força.</label>
+            </div>
+            <button type="button" id="next7">Próxima</button>
+        </div>
+
+        <!-- Bloco 3: Valores (Perguntas 8-10) — Propósitos com romance -->
+        <div class="question" id="q8">
+            <h3>8. No fundo, o que te move a levantar da cama todo dia, coração?</h3>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A chance de inovar e deixar uma marca única no mundo ao
+                    redor, me inspirando.</label>
+                <label><input type="radio" name="q8" value="B"> Contribuir para o bem-estar e crescimento das pessoas
+                    próximas, com amor.</label>
+                <label><input type="radio" name="q8" value="C"> Garantir estabilidade e proteção em um ambiente
+                    previsível, me ancorando.</label>
+            </div>
+            <button type="button" id="next8">Próxima</button>
+        </div>
+
+        <div class="question" id="q9">
+            <h3>9. Em um mundo ideal, seu dia envolveria mais..., minha eterna?</h3>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> Exploração de possibilidades criativas e conexões
+                    inesperadas que me alegram.</label>
+                <label><input type="radio" name="q9" value="B"> Interações profundas que fortalecem laços e inspiram
+                    mudanças suaves.</label>
+                <label><input type="radio" name="q9" value="C"> Estruturas claras que promovem eficiência e
+                    tranquilidade coletiva, me equilibrando.</label>
+            </div>
+            <button type="button" id="next9">Próxima</button>
+        </div>
+
+        <div class="question" id="q10">
+            <h3>10. O que te faria sentir realizada no final de um projeto, amor?</h3>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> Ter criado algo original que ecoa e inspira além do
+                    esperado, me enchendo.</label>
+                <label><input type="radio" name="q10" value="B"> Ter facilitado conexões ou aprendizados que tocam vidas
+                    reais, com doçura.</label>
+                <label><input type="radio" name="q10" value="C"> Ter assegurado que tudo correu liso, sem riscos ou
+                    desperdícios, me orgulhando.</label>
+            </div>
+            <button type="button" id="submit">Ver Meu Resultado Completo, com Todo Meu Carinho</button>
+        </div>
+    </form>
+
+    <button type="button" id="reset" style="display:none;">Reiniciar e Fazer de Novo, Amor</button>
+
+    <div id="result"></div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 10;
+
+        // Função para atualizar progresso
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Mostrar próxima pergunta
+        document.querySelectorAll('[id^="next"]').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const qNum = parseInt(btn.id.replace('next', ''));
+                const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+                if (!selected) {
+                    alert('Selecione uma opção antes de prosseguir, tá? 💕');
+                    return;
+                }
+                document.getElementById(`q${qNum}`).classList.remove('active');
+                currentQuestion++;
+                if (currentQuestion <= totalQuestions) {
+                    document.getElementById(`q${currentQuestion}`).classList.add('active');
+                }
+                updateProgress();
+            });
         });
 
-        // Exportar para PDF
-        document.getElementById('export-pdf').addEventListener('click', () => {
-            const doc = new jsPDF();
-            const pageWidth = doc.internal.pageSize.getWidth();
-            const margin = 10; // Margem reduzida para evitar cortes
-            let y = 10;
-
-            // Adicionar cabeçalho
-            doc.setFontSize(16);
-            doc.text('Tarefa Avaliativa de Programação', margin, y);
-            y += 10;
-            doc.setFontSize(12);
-            doc.text(`Alunos: ${studentName}`, margin, y);
-            y += 10;
-            doc.text(`Turma: ${studentClass}`, margin, y);
-            y += 10;
-            doc.text(`Data: ${new Date().toLocaleDateString()} às ${new Date().toLocaleTimeString()}`, margin, y);
-            y += 15;
-
-            // Adicionar respostas
-            doc.setFontSize(14);
-            doc.text('Respostas:', margin, y);
-            y += 10;
-
-            // Coletar respostas de múltipla escolha (1-17)
-            for (let i = 1; i <= 17; i++) {
+        // Submit e análise personalizada com carinho
+        document.getElementById('submit').addEventListener('click', () => {
+            let scores = { A: 0, B: 0, C: 0 };
+            for (let i = 1; i <= 10; i++) {
                 const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                const answer = selected ? selected.value : 'Não respondido';
-                doc.setFontSize(10); // Reduzir tamanho da fonte para caber
-                const lines = doc.splitTextToSize(`Questão ${i}: ${answer}`, pageWidth - (2 * margin) - 10); // Ajustar largura máxima
-                for (let line of lines) {
-                    if (y > 280) { doc.addPage(); y = 10; }
-                    doc.text(line, margin, y);
-                    y += 5;
+                if (!selected) {
+                    alert('Responda todas as perguntas, minha linda!');
+                    return;
                 }
-                y += 2; // Espaçamento reduzido
+                scores[selected.value]++;
             }
 
-            // Coletar respostas de ordenação (18-21, 27-29)
-            for (let i = 18; i <= 21; i++) {
-                const maxSteps = i === 18 ? 4 : i === 21 ? 12 : 3;
-                const order = [];
-                for (let j = 1; j <= maxSteps; j++) {
-                    const input = document.getElementById(`q${i}-${j}`);
-                    order.push(input ? input.value : '');
-                }
-                doc.setFontSize(10);
-                const lines = doc.splitTextToSize(`Questão ${i}: ${order.join(', ')}`, pageWidth - (2 * margin) - 10);
-                for (let line of lines) {
-                    if (y > 280) { doc.addPage(); y = 10; }
-                    doc.text(line, margin, y);
-                    y += 5;
-                }
-                y += 2;
-            }
-            for (let i = 27; i <= 29; i++) {
-                const maxSteps = i === 27 ? 5 : i === 28 ? 6 : 8;
-                const order = [];
-                for (let j = 1; j <= maxSteps; j++) {
-                    const input = document.getElementById(`q${i}-${j}`);
-                    order.push(input ? input.value : '');
-                }
-                doc.setFontSize(10);
-                const lines = doc.splitTextToSize(`Questão ${i}: ${order.join(', ')}`, pageWidth - (2 * margin) - 10);
-                for (let line of lines) {
-                    if (y > 280) { doc.addPage(); y = 10; }
-                    doc.text(line, margin, y);
-                    y += 5;
-                }
-                y += 2;
+            // Calcular percentuais
+            const total = 10;
+            const percA = (scores.A / total * 100).toFixed(0);
+            const percB = (scores.B / total * 100).toFixed(0);
+            const percC = (scores.C / total * 100).toFixed(0);
+
+            // Determinar perfis primário e secundário
+            const maxScore = Math.max(scores.A, scores.B, scores.C);
+            let primary = '';
+            let secondary = '';
+            let primaryKey = '';
+            if (scores.A === maxScore) { primary = 'Criativo/Comunicativo'; primaryKey = 'A'; }
+            else if (scores.B === maxScore) { primary = 'Social/Educador'; primaryKey = 'B'; }
+            else { primary = 'Prático/Organizador'; primaryKey = 'C'; }
+
+            // Secundário: se outro score >= max - 2
+            const otherKeys = Object.keys(scores).filter(k => k !== primaryKey);
+            const secMax = Math.max(scores[otherKeys[0]], scores[otherKeys[1]]);
+            if (secMax >= maxScore - 2) {
+                const secKey = Object.keys(scores).find(k => scores[k] === secMax && k !== primaryKey);
+                if (secKey === 'A') secondary = ' com toques criativos extras que te fazem brilhar';
+                else if (secKey === 'B') secondary = ' com influências sociais fortes que aquecem corações';
+                else secondary = ' com ênfase prática adicional que te dá asas seguras';
             }
 
-            // Coletar respostas de código (22-26) com tratamento de texto longo e links do Colab
-            for (let i = 22; i <= 26; i++) {
-                const textarea = document.getElementById(`q${i}`);
-                const answer = textarea ? textarea.value : 'Não respondido';
-                const colabLink = document.getElementById(`q${i}-colab`) ? document.getElementById(`q${i}-colab`).value : 'Sem link';
-                doc.setFontSize(10);
-                doc.text(`Questão ${i}:`, margin, y);
-                y += 5;
-                const codeLines = doc.splitTextToSize(answer, pageWidth - (2 * margin) - 10);
-                for (let line of codeLines) {
-                    if (y > 280) {
-                        doc.addPage();
-                        y = 10;
-                    }
-                    doc.text(line, margin, y);
-                    y += 4;
-                }
-                if (colabLink !== 'Sem link') {
-                    y += 2;
-                    const linkLines = doc.splitTextToSize(`Link do Colab: ${colabLink}`, pageWidth - (2 * margin) - 10);
-                    for (let line of linkLines) {
-                        if (y > 280) {
-                            doc.addPage();
-                            y = 10;
-                        }
-                        doc.text(line, margin, y);
-                        y += 4;
-                    }
-                }
-                y += 4; // Espaçamento extra após a questão
+            // Construir análise com todo o amor
+            let analysis = `
+                <h2>🌟 Minha linda, baseado nas suas respostas, você tem ${percA}% de afinidade com atividades criativas e expressivas (A), ${percB}% com interações humanas e de apoio (B), e ${percC}% com estruturas práticas e organizadas (C). Seu Perfil Primário: ${primary}${secondary}</h2>
+                <p><strong>Análise Detalhada, só pra você:</strong> Isso mostra uma mulher incrível, versátil e cheia de luz — especialmente com sua bagagem no mercado, onde o atendimento mistura um sorriso cativante com uma organização que encanta. 💖</p>
+            `;
+
+            // Sugestões com toques românticos
+            if (scores.A >= 4) {
+                analysis += `
+                    <div class="tips">
+                        <h3>💕 Conexão com Publicidade & Propaganda, pra você brilhar</h3>
+                        <p>Seu lado que ama inovar e cativar é puro fogo — imagine criando conteúdos que conectam mundos, usando aquele jeitinho seu de sugestões no varejo pra algo épico. Ia te ver tão radiante!</p>
+                        <p><strong>Passos aí pertinho:</strong> Comunicação Social na UFSM ou workshops de Marketing no SENAC. Tem o SebraeLab </p>
+                `;
+            }
+            if (scores.B >= 4) {
+                analysis += `
+                    <div class="tips">
+                        <h3>🌸 Conexão com Pedagogia, linda.</h3>
+                        <p>A empatia e o prazer em guiar outros são sua essência — pense em transformar conversas de apoio em aulas que mudam vidas, estendendo o que você já faz ajudando todo mundo com tanto carinho.</p>
+                        <p><strong>Onde você pode ir, amor:</strong> Licenciatura na UFSM ou cursos de Educação no SENAC. De repente voluntariado em projetos locais? </p>
+                `;
+            }
+            if (scores.C >= 4) {
+                analysis += `
+                    <div class="tips">
+                        <h3>🛡️ Conexão com Segurança do Trabalho, pra te proteger (e proteger o mundo)</h3>
+                        <p>Sua atenção a detalhes e desejo de ordem são como um abraço protetor — skills que você afia no mercado, aplicadas pra prevenir riscos e criar paz em ambientes reais. Você é forte assim!</p>
+                        <p><strong>Passos aqui pertinho:</strong> Técnico no IFRS ou SENAC, com vagas lindas na região. Um módulo online curto? Eu te ajudo a estudar, de mãos dadas.</p>
+                `;
             }
 
-            // Adicionar log de atividades
-            y += 10;
-            doc.setFontSize(12);
-            doc.text('Log de Atividades:', margin, y);
-            y += 8;
-            doc.setFontSize(9);
-            const logLines = doc.splitTextToSize(activityLog.join('\n'), pageWidth - (2 * margin) - 10);
-            for (let line of logLines) {
-                if (y > 280) {
-                    doc.addPage();
-                    y = 10;
-                }
-                doc.text(line, margin, y);
-                y += 4;
+            if (Math.abs(percA - percB) <= 20 || Math.abs(percA - percC) <= 20 || Math.abs(percB - percC) <= 20) {
+                analysis += `
+                    <div class="tips">
+                        <h3>💞 Perfil Híbrido? Meu Deus, que sorte a minha!</h3>
+                        <p>Seus scores tão equilibrados, abrindo portas pra fusões mágicas como Publicidade Educacional (criar campanhas que ensinam com graça) ou Segurança com Comunicação (treinamentos cheios de empatia). Vamos experimentar juntas e ver onde seu brilho explode?</p>
+                `;
             }
 
-            // Salvar PDF
-            doc.save(`tarefa_${studentName}_${new Date().toISOString().slice(0, 10)}.pdf`);
+            analysis += `
+                <p><strong>Dica Final, do fundo do meu peito:</strong> Isso é só um espelho pro seu potencial infinito, amor. A real clareza vem testando, com leveza — e eu tô louco pra sonhar isso ao seu lado. Me conta o que achou, e quem sabe a gente marca um café em Santa Maria pra planejar o próximo passo? Te amo mais que tudo. 🌹</p>
+            `;
+
+            // Barras visuais
+            analysis += `
+                <div class="profile-bar">
+                    <div>
+                        <div class="bar-item"><div class="bar-fill" style="width: ${percA}%"></div></div>
+                        <div class="bar-label">Criativo: ${percA}%</div>
+                    </div>
+                    <div>
+                        <div class="bar-item"><div class="bar-fill" style="width: ${percB}%"></div></div>
+                        <div class="bar-label">Social: ${percB}%</div>
+                    </div>
+                    <div>
+                        <div class="bar-item"><div class="bar-fill" style="width: ${percC}%"></div></div>
+                        <div class="bar-label">Prático: ${percC}%</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('result').innerHTML = analysis;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('reset').style.display = 'block';
+            document.getElementById('quizForm').style.display = 'none';
         });
+
+        // Reset
+        document.getElementById('reset').addEventListener('click', () => {
+            location.reload();
+        });
+
+        updateProgress(); // Inicial
     </script>
 </body>
+
 </html>
